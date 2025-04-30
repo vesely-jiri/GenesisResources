@@ -38,8 +38,5 @@ build/
 .DS_Store
 ###----------------------------------------------------------------------
 #User defined patterns
-.idea/*
-!.idea/modules.xml
-!.idea/runConfigurations/
 target
 *.~
