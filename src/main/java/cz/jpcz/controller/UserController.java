@@ -17,25 +17,34 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users/{ID}")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id,
                                            @RequestParam(value = "detail", defaultValue = "false") boolean detail) {
         try {
-            return ResponseEntity.ok(userService.getDTOUser(id));
+            return ResponseEntity.ok(userService.getDTOUser(id,detail));
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "detail", defaultValue = "false") boolean detail) {
+        return ResponseEntity.ok(userService.getAllDTOUsers(detail));
     }
 
-    @DeleteMapping("/users/{ID}")
+    @PutMapping("/users")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+        try {
+            return ResponseEntity.ok(userService.updateDTOUser(userDTO.getId(), userDTO));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @DeleteMapping("/users/{id}")
     public HttpStatus deleteUser(@PathVariable Long id) {
         try {
-            userService.deleteUser(id);
+            userService.deleteDTOUser(id);
             return HttpStatus.OK;
         } catch (UserNotFoundException e) {
             return HttpStatus.NOT_FOUND;

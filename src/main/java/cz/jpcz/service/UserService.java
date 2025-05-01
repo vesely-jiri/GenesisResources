@@ -6,7 +6,6 @@ import cz.jpcz.exceptions.UserNotFoundException;
 import cz.jpcz.model.UserModel;
 import cz.jpcz.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,29 +16,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserModel getUser(Long id) {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
-
-        return new UserModel(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(),
-                userEntity.getPersonId(), userEntity.getUuid());
+    public UserDTO getDTOUser(Long id) {
+        return getDTOUser(id, false);
     }
 
-    public UserDTO getDTOUser(Long id) {
+    public UserDTO getDTOUser(Long id, boolean detail) {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
 
+        if (!detail) return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
         return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(),
                 userEntity.getPersonId(), userEntity.getUuid());
     }
 
-    public List<UserDTO> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userEntity -> new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(),
-                        userEntity.getPersonId(), userEntity.getUuid())).toList();
+    public List<UserDTO> getAllDTOUsers(boolean detail) {
+        return userRepository.findAll().stream().map(user -> getDTOUser(Long.valueOf(user.getId()), detail)).toList();
     }
 
-    public void deleteUser(Long id) {
+    public UserDTO updateDTOUser(Long id, UserDTO userDTO) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+        userEntity.setFirstName(userDTO.getFirstName());
+        userEntity.setLastName(userDTO.getLastName());
+        userRepository.save(userEntity);
+        return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
+    }
+
+    public void deleteDTOUser(Long id) {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.delete(userEntity);
