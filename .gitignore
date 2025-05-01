@@ -40,3 +40,4 @@ build/
 #User defined patterns
 target
 *.~
+*.ini
