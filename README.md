@@ -12,7 +12,7 @@ RESTful API that manages registration system for users
 
 ## Overview
 
-Project is based on simple RESTful API build on SpringBoot framework. API 
+Project is based on simple RESTful API built on SpringBoot framework. API 
 allows client to perform CRUD operations on users. User can be created, 
 read, updated or deleted. Backend can be run in 4 modes(profiles):
 - development(dev) - using PostgreSQL database and simple credentials
