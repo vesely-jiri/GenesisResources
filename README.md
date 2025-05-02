@@ -31,6 +31,7 @@ prod profile is used by default
 - PostgreSQL
 - Hibernate
 - Maven
+- SLF4J
 
 ## Installation
 
