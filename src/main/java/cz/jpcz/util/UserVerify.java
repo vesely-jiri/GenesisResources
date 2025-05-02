@@ -6,10 +6,11 @@ import java.util.Scanner;
 
 public class UserVerify {
 
-    public static boolean verify(String uuid, String personId) {
+    public static boolean verify(String personId) {
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("src/main/resources/dataPersonId.txt")))) {
             while (scanner.hasNextLine()) {
                 if (scanner.nextLine().equals(personId)) {
+                    System.out.println("Successful verification");
                     return true;
                 }
             }

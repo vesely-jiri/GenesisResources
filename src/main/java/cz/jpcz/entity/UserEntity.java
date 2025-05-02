@@ -1,5 +1,7 @@
 package cz.jpcz.entity;
 
+import cz.jpcz.exceptions.UserNotFoundException;
+import cz.jpcz.util.UserVerify;
 import jakarta.persistence.*;
 
 import java.io.File;
@@ -22,9 +24,12 @@ public class UserEntity {
     public UserEntity() {}
 
     public UserEntity(String firstName, String lastName, String personId, String uuid) {
-        //Get ids from resources/dataPersonId.txt
-
-
+        if (!UserVerify.verify(personId)) {
+            throw new UserNotFoundException("Invalid personId");
+        }
+        if (uuid == null) {
+            uuid = java.util.UUID.randomUUID().toString();
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.personId = personId;

@@ -12,6 +12,12 @@ public class UserDTO {
 
     public UserDTO() {}
 
+    public UserDTO(String firstName, String lastName, String personId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personId = personId;
+    }
+
     public UserDTO(long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;

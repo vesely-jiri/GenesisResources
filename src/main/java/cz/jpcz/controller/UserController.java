@@ -34,7 +34,11 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.createDTOUser(userDTO));
+        try {
+            return ResponseEntity.ok(userService.createDTOUser(userDTO));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PutMapping("/users")
