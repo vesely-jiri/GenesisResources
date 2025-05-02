@@ -10,7 +10,7 @@ public class UserDTO {
     private String personId;
     private String uuid;
 
-    public UserDTO() {};
+    public UserDTO() {}
 
     public UserDTO(long id, String firstName, String lastName) {
         this.id = id;
