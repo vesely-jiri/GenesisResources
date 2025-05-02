@@ -2,6 +2,7 @@ package cz.jpcz.service;
 
 import cz.jpcz.dto.UserDTO;
 import cz.jpcz.entity.UserEntity;
+import cz.jpcz.exceptions.PersonAlreadyExistsException;
 import cz.jpcz.exceptions.UserNotFoundException;
 import cz.jpcz.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class UserService {
     }
 
     public UserDTO createDTOUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId(), userDTO.getUuid());
+        if (userRepository.existsByPersonId(userDTO.getPersonId())) throw new PersonAlreadyExistsException(userDTO.getPersonId());
+        UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId());
         userRepository.save(userEntity);
         return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
     }

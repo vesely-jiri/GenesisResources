@@ -2,8 +2,8 @@ CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
-    person_id VARCHAR(255),
-    uuid VARCHAR(255)
+    person_id VARCHAR(255) UNIQUE,
+    uuid VARCHAR(255) UNIQUE
 );
 
 --- Test data
