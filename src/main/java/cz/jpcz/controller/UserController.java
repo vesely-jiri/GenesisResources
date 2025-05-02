@@ -32,6 +32,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllDTOUsers(detail));
     }
 
+    @PostMapping("/users")
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.createDTOUser(userDTO));
+    }
+
     @PutMapping("/users")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         try {

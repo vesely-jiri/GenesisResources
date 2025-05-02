@@ -2,6 +2,8 @@ package cz.jpcz.entity;
 
 import jakarta.persistence.*;
 
+import java.io.File;
+
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -20,6 +22,9 @@ public class UserEntity {
     public UserEntity() {}
 
     public UserEntity(String firstName, String lastName, String personId, String uuid) {
+        //Get ids from resources/dataPersonId.txt
+
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.personId = personId;

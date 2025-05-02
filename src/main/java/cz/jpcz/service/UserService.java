@@ -3,7 +3,6 @@ package cz.jpcz.service;
 import cz.jpcz.dto.UserDTO;
 import cz.jpcz.entity.UserEntity;
 import cz.jpcz.exceptions.UserNotFoundException;
-import cz.jpcz.model.UserModel;
 import cz.jpcz.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +30,12 @@ public class UserService {
 
     public List<UserDTO> getAllDTOUsers(boolean detail) {
         return userRepository.findAll().stream().map(user -> getDTOUser(Long.valueOf(user.getId()), detail)).toList();
+    }
+
+    public UserDTO createDTOUser(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId(), userDTO.getUuid());
+        userRepository.save(userEntity);
+        return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
     }
 
     public UserDTO updateDTOUser(Long id, UserDTO userDTO) {
