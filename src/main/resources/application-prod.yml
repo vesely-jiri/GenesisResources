@@ -2,11 +2,18 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/mydb
     driver-class-name: org.postgresql.Driver
-    username: PQAdmin
-    password: PQAdmin
+    username: PQUser
+    password: IpthyRACEsTEndaVianfORgA
 
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    root: INFO
+    cz.jpcz: info
+  file:
+    name: logs/app.log

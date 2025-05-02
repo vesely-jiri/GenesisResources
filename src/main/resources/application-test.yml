@@ -11,11 +11,10 @@ spring:
     username: us
     password: pa
 
-
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
 
   h2:
     console:
@@ -24,3 +23,6 @@ spring:
 logging:
   level:
     root: info
+    cz.jpcz: info
+  file:
+    name: logs/app.log
