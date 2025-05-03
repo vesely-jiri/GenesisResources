@@ -26,10 +26,9 @@ prod profile is used by default
 
 - Java 21(LTS)
 - SpringBoot
-- Spring Data JPA
+- Spring Data JPA + Hibernate
 - H2
 - PostgreSQL
-- Hibernate
 - Maven
 - Logback + SLF4J
 - JUnit + Mockito
