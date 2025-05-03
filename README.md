@@ -25,11 +25,11 @@ prod profile is used by default
 ## Stack
 
 - Java 21(LTS)
+- Maven
 - SpringBoot
 - Spring Data JPA + Hibernate
 - H2
 - PostgreSQL
-- Maven
 - Logback + SLF4J
 - JUnit + Mockito
 
