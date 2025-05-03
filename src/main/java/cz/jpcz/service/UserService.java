@@ -42,7 +42,7 @@ public class UserService {
     }
 
     public List<UserDTO> getAllDTOUsers(boolean detail) {
-        return userRepository.findAll().stream().map(user -> getDTOUser(Long.valueOf(user.getId()), detail)).toList();
+        return userRepository.findAll().stream().map(user -> getDTOUser(user.getId(), detail)).toList();
     }
 
     public UserDTO createDTOUser(UserDTO userDTO) {
