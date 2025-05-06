@@ -1,0 +1,28 @@
+spring:
+  sql:
+    init:
+      mode: ALWAYS
+      data-locations:
+        - classpath:/data.sql
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: us
+    password: pa
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    root: info
+    cz.jpcz: info
+  file:
+    name: logs/app.log

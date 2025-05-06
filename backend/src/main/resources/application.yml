@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: GenesisResources
+
+  profiles:
+    active:
+      - prod
+
+server:
+  port: 8080
