@@ -9,3 +9,6 @@ services:
         NODE_ENV: development
     env_file:
       - .env.development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
