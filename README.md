@@ -49,17 +49,22 @@ The following technologies are used in this project:
 | **Docker**                  | For running services in containers           |
 | **Bash**                    | For executing init and start scripts through GenesisResources CLI |
 
-1.) Clone repository
+1.) Open terminal supporting bash and locate to desired project directory where GenesisResources will be cloned
+```
+cd /path/to/apps
+```
+
+2.) Clone repository
 ```
 git clone https://github.com/vesely-jiri/GenesisResources
 ```
 
-2.) Navigate to project directory
+3.) Navigate to project directory
 ```
 cd GenesisResources
 ```
 
-3.) Run start script with build flag
+4.) Run start script with build flag
 ```
 ./start.sh -s development -b
 ```
@@ -67,12 +72,12 @@ cd GenesisResources
 ./start.sh -s production -b
 ```
 
-4.) Choose password for chosen profile database or let script generate one using (openssl base64 12)
+5.) Choose password for chosen profile database or let script generate one using (openssl base64 12)
 ```
 Enter new database password for .env.<profile> (generate):
 ```
 
-5.) App is ready to be used
+6.) App is ready to be used
 ```
 #Backend default port
 http://localhost:8080
