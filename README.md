@@ -72,7 +72,7 @@ cd GenesisResources
 ./start.sh -s production -b
 ```
 
-5.) Choose password for chosen profile database or let script generate one using (openssl base64 12)
+5.) Choose database password for chosen profile or let script generate one using (openssl base64 12)
 ```
 Enter new database password for .env.<profile> (generate):
 ```
