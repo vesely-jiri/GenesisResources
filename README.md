@@ -1,39 +1,46 @@
-# Deployable Genesis resources
+# Deployable Genesis Resources
 
-Fully deployable registration system for users of Genesis Resources.
+A fully deployable user registration system for Genesis Resources.
 
-## Table of contents
+## Table of Contents
 
 - [Overview](#overview)
-- [Stack](#stack)
+- [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
 
 ## Overview
-Frontend is based on React framework.
 
-Backend is based on simple RESTful API built on SpringBoot framework. API 
-allows client to perform CRUD operations on users. User can be created, 
-read, updated or deleted. Backend can be run in 4 modes(profiles):
-- development(dev) - using PostgreSQL database and simple credentials
-- production(prod) - (default) using ready to use PostgreSQL database and settings
+The frontend is built using the React(Vite) framework using JSX + SWC.
 
-Database is based on PostgreSQL and H2.
+The backend exposes a simple RESTful API developed with the Spring Boot framework. The API allows the client to perform CRUD operations on users. Users can be created, read, updated, or deleted.
+The application can be run in two different profiles:
 
-## Stack
+- **Development (dev)**: Uses a H2 database in backend, React Vite HMR for hot reloading, and optimized settings for development environments. 
+- **Production (prod)**: Utilizing PostgreSQL database with preconfigured database and optimized settings for production environments.
 
-- Java 21(LTS)
-- Maven
-- SpringBoot
-- Spring Data JPA + Hibernate
-- H2
-- PostgreSQL
-- Logback + SLF4J
-- JUnit + Mockito
+## Tech Stack
+
+The following technologies are used in this project:
+
+| **Technology**                | **Purpose**                                   |
+|-------------------------------|-----------------------------------------------|
+| **Java 21 (LTS)**              | Core language for backend development         |
+| **Maven**                      | Dependency management and build automation    |
+| **Spring Boot**                | Framework for building Java-based applications|
+| **Spring Data JPA + Hibernate**| ORM for database interaction                  |
+| **H2**                         | In-memory database for development            |
+| **PostgreSQL**                 | Relational database for production            |
+| **Logback + SLF4J**            | Logging framework                             |
+| **JUnit + Mockito**            | Testing frameworks                            |
+| **React (Vite)**               | Frontend development framework and build tool |
+
 
 ## Installation
-## Requirements:
+
+### Requirements:
+
 | **Tool**                   | **Purpose**                                   |
 |----------------------------|-----------------------------------------------|
 | **Git**                     | For cloning project                          |
@@ -73,12 +80,11 @@ http://localhost:8080
 http://localhost:3000
 ```
 
-
 ## Usage
 
 ### API Endpoints
 
-##### GET 
+##### GET
 
 ```
 GET http://localhost:8080/api/v1/users
@@ -99,6 +105,7 @@ POST http://localhost:8080/api/v1/users
     "personId": "1234567890"
 }
 ```
+
 ##### PUT
 
 ```
