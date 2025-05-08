@@ -1,40 +1,59 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
+# Backend (Java/Spring Boot) v adresáři backend/
+# Ignoruje soubory a složky generované Mavenem a logy
+**/target/
+**/*.jar
+**/*.war
+**/*.ear
+**/*.class
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.swp
+**/.DS_Store
+**/logs/
+**/h2/
 
+# Ignoruje konfigurace a soubory specifické pro vývojová prostředí
+**/.idea/
+**/.vscode/
+**/.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/mavegn-wrapper.properties
+
+# Frontend (Node.js) v jakékoliv složce
+# Ignoruje node_modules a build složky
+**/node_modules/
+**/dist/
+**/build/
+**/.cache/
+**/yarn.lock
+**/package-lock.json
+**/npm-debug.log*
+**/.nuxt/
+**/.next/
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
+
+# Docker
+# Ignoruje .env soubory
+*.env
+.env*
+
+# IntelliJ/WebStorm/VS Code
+# Ignoruje IDE a editor konfigurace
 .idea/
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
-*.iml
-*.ipr
-
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
 .vscode/
+*.iml
 
-.DS_Store
+# Systémové soubory
+Thumbs.db
 
-*~
-*.ini
-*.log
+# OS-specifické soubory
+*.swo
+*.swn
+*.bak
+*.orig
 
-!**/src/main/**/target/
-!**/src/test/**/target/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-frontend/build/
-frontend/dist/
+# Jiné
+*.rej

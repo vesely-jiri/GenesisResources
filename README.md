@@ -1,6 +1,6 @@
 # Deployable Genesis resources
 
-RESTful API that manages registration system for users
+Fully deployable registration system for users of Genesis Resources.
 
 ## Table of contents
 
@@ -11,16 +11,15 @@ RESTful API that manages registration system for users
 - [API](#api)
 
 ## Overview
+Frontend is based on React framework.
 
-Project is based on simple RESTful API built on SpringBoot framework. API 
+Backend is based on simple RESTful API built on SpringBoot framework. API 
 allows client to perform CRUD operations on users. User can be created, 
 read, updated or deleted. Backend can be run in 4 modes(profiles):
 - development(dev) - using PostgreSQL database and simple credentials
-- production(prod) - using ready to use PostgreSQL database and settings
-- test(test) - using H2 database
-- no database(nodb) - does not run with any database
+- production(prod) - (default) using ready to use PostgreSQL database and settings
 
-prod profile is used by default
+Database is based on PostgreSQL and H2.
 
 ## Stack
 
@@ -34,6 +33,12 @@ prod profile is used by default
 - JUnit + Mockito
 
 ## Installation
+Requirements:
+- Git             - For cloning project
+- Java 21(LTS)^   - For running backend application
+- Maven           - For building backend application
+- Docker          - For running services in containers
+- Bash            - For executing init and start scripts through GenesisResources CLI
 
 1.) Clone repository
 ```
@@ -45,15 +50,19 @@ git clone https://github.com/vesely-jiri/GenesisResources
 cd GenesisResources
 ```
 
-3.) Install dependencies
+3.) Run start script with build flag
 ```
-mvn install
+./start.sh -s development -b
+```
+```
+./start.sh -s production -b
 ```
 
-4.) Run application
+4.) Choose password for chosen profile database or let script generate one using (openssl base64 12)
 ```
-mvn spring-boot:run
+Enter new database password for .env.<profile> (generate):
 ```
+
 
 ## Usage
 
@@ -98,3 +107,8 @@ PUT http://localhost:8080/api/v1/users
 ```
 DELETE http://localhost:8080/api/v1/users/{id}
 ```
+
+# TODO
+- Implement frontend
+- Implement Docker/GitHub secrets for database credentials
+- Implement GitHub actions for CI/CD

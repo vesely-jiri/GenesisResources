@@ -18,3 +18,4 @@ spring:
 logging:
   level:
     root: INFO
+    cz.jpcz: DEBUG

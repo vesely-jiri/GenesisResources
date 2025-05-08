@@ -4,7 +4,4 @@ spring:
 
   profiles:
     active:
-      - prod
-
-server:
-  port: 8080
+      - ${SPRING_PROFILE}
