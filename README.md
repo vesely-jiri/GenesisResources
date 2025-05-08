@@ -63,6 +63,14 @@ cd GenesisResources
 Enter new database password for .env.<profile> (generate):
 ```
 
+5.) App is ready to be used
+```
+#Backend default port
+http://localhost:8080
+#Frontend default port
+http://localhost:3000
+```
+
 
 ## Usage
 
