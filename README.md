@@ -34,11 +34,11 @@ Database is based on PostgreSQL and H2.
 
 ## Installation
 Requirements:
-- Git             - For cloning project
-- Java 21(LTS)^   - For running backend application
-- Maven           - For building backend application
-- Docker          - For running services in containers
-- Bash            - For executing init and start scripts through GenesisResources CLI
+- Git                 - For cloning project
+- Java 21(LTS)^       - For running backend application
+- Maven(development)  - For building backend application
+- Docker              - For running services in containers
+- Bash                - For executing init and start scripts through GenesisResources CLI
 
 1.) Clone repository
 ```
