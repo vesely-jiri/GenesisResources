@@ -1,0 +1,14 @@
+services:
+  backend:
+    env_file:
+      - .env.development
+
+  frontend:
+    build:
+      args:
+        NODE_ENV: development
+    env_file:
+      - .env.development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules

@@ -1,0 +1,61 @@
+# Backend (Java/Spring Boot) v adresáři backend/
+# Ignoruje soubory a složky generované Mavenem a logy
+**/target/
+**/*.jar
+**/*.war
+**/*.ear
+**/*.class
+**/*.log
+**/*.tmp
+**/*.bak
+**/*.swp
+**/.DS_Store
+**/logs/
+**/h2/
+
+# Ignoruje konfigurace a soubory specifické pro vývojová prostředí
+**/.idea/
+**/.vscode/
+**/.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/mavegn-wrapper.properties
+
+# Frontend (Node.js) v jakékoliv složce
+# Ignoruje node_modules a build složky
+**/node_modules/
+**/dist/
+**/build/
+**/.cache/
+**/yarn.lock
+**/package-lock.json
+**/npm-debug.log*
+**/.nuxt/
+**/.next/
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
+
+# Docker
+# Ignoruje .env soubory
+*.env
+.env*
+
+# IntelliJ/WebStorm/VS Code
+# Ignoruje IDE a editor konfigurace
+.idea/
+.vscode/
+*.iml
+
+# Systémové soubory
+Thumbs.db
+
+# OS-specifické soubory
+*.swo
+*.swn
+*.bak
+*.orig
+
+# Jiné
+*.rej
+
+*~
