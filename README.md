@@ -131,6 +131,5 @@ DELETE http://localhost:8080/api/v1/users/{id}
 ```
 
 # TODO
-- Implement frontend
 - Implement Docker/GitHub secrets for database credentials
 - Implement GitHub actions for CI/CD
