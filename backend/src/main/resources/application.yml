@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: GenesisResources
-
-  profiles:
-    active:
-      - ${SPRING_PROFILE}
