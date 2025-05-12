@@ -5,6 +5,7 @@ import cz.jpcz.entity.UserEntity;
 import cz.jpcz.exceptions.PersonAlreadyExistsException;
 import cz.jpcz.exceptions.UserNotFoundException;
 import cz.jpcz.repository.UserRepository;
+import cz.jpcz.util.UserVerify;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class UserService {
             logger.warn("User with personId {} already exists", userDTO.getPersonId());
             throw new PersonAlreadyExistsException(userDTO.getPersonId());
         }
+        UserVerify.validatePerson(userDTO.getPersonId());
         UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId());
         userRepository.save(userEntity);
         logger.info("Created user with ID {}", userEntity.getId());

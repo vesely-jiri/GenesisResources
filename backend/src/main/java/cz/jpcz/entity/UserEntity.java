@@ -22,7 +22,6 @@ public class UserEntity {
     public UserEntity() {}
 
     public UserEntity(String firstName, String lastName, String personId) {
-        UserVerify.validatePerson(personId);
         this.uuid = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
