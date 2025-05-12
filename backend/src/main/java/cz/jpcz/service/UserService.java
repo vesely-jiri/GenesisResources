@@ -3,6 +3,7 @@ package cz.jpcz.service;
 import cz.jpcz.dto.UserDTO;
 import cz.jpcz.entity.UserEntity;
 import cz.jpcz.exceptions.PersonAlreadyExistsException;
+import cz.jpcz.exceptions.PersonNotFoundException;
 import cz.jpcz.exceptions.UserNotFoundException;
 import cz.jpcz.repository.UserRepository;
 import cz.jpcz.util.UserVerify;
@@ -67,6 +68,10 @@ public class UserService {
                     return new UserNotFoundException("User with id " + id + " not found");
                         });
         logger.info("Updating user with ID {}", id);
+        if (!userEntity.getPersonId().equals(userDTO.getPersonId())) {
+            logger.warn("Unable to update! PersonId {} does not match", userDTO.getPersonId() + " not found");
+            throw new PersonNotFoundException(userDTO.getPersonId());
+        }
         userEntity.setFirstName(userDTO.getFirstName());
         userEntity.setLastName(userDTO.getLastName());
         userRepository.save(userEntity);
