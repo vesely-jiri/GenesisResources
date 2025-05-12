@@ -28,13 +28,13 @@ export async function createUser(userData) {
   return handleResponse(response);
 }
 
-export async function updateUser(userId, userData) {
-  const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
-  });
-  return handleResponse(response);
+export async function updateUser(userData) {
+	const response = await fetch(`${API_BASE_URL}/users`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(userData),
+	});
+	return handleResponse(response);
 }
 
 export async function deleteUser(userId) {

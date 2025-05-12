@@ -1,6 +1,147 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUsers, deleteUser, createUser } from '../services/api';
+import { fetchUsers, deleteUser, createUser, updateUser } from '../services/api';
 import styled from 'styled-components';
+
+const HomePage = () => {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [showForm, setShowForm] = useState(false);
+    const [newUser, setNewUser] = useState({ firstName: '', lastName: '', personId: '' });
+    const [message, setMessage] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+    const [editingUserId, setEditingUserId] = useState(null);
+
+    useEffect(() => {
+        fetchUsers()
+            .then((data) => {
+                setUsers(data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setError('Error fetching users');
+                setLoading(false);
+            });
+    }, []);
+
+    const handleDelete = (id) => {
+        deleteUser(id)
+            .then(() => {
+                setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+                setMessage('User deleted successfully');
+            })
+            .catch((error) => {
+                setMessage('Error deleting user');
+                console.log('Delete user error:', error);
+            });
+    };
+
+    const handleEdit = (user) => {
+        setNewUser(user);
+        setEditingUserId(user.id);
+        setIsEditing(true);
+        setShowForm(true);
+    };
+
+    const handleUpdateUser = () => {
+        updateUser({ ...newUser, id: editingUserId })
+            .then(() => {
+                setMessage('User updated successfully');
+                setNewUser({ firstName: '', lastName: '', personId: '' });
+                setShowForm(false);
+                setIsEditing(false);
+                setEditingUserId(null);
+                fetchUsers()
+                    .then((data) => setUsers(data))
+                    .catch((error) => console.log('Error fetching users after update:', error));
+            })
+            .catch((error) => {
+                setMessage(`Error updating user: ${error.message}`);
+                console.log('Update user error:', error);
+            });
+    };
+
+    const handleSubmit = () => {
+        if (isEditing) {
+            handleUpdateUser();
+        } else {
+            handleAddUser();
+        }
+    };
+
+    const handleAddUser = () => {
+        createUser(newUser)
+            .then(() => {
+                setMessage('User added successfully');
+                setNewUser({ firstName: '', lastName: '', personId: '' });
+                setShowForm(false);
+                fetchUsers()
+                    .then((data) => setUsers(data))
+                    .catch((error) => console.log('Error fetching users after add:', error));
+            })
+            .catch((error) => {
+                setMessage(`Error adding user: ${error.message}`);
+                console.log('Add user error:', error);
+            });
+    };
+
+    if (loading) {
+        return <p>Načítám...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    return (
+        <PageWrapper>
+            <Container>
+                <Title>Genesis users</Title>
+                <AddButton onClick={() => setShowForm(!showForm)}>
+                    {showForm ? 'Close form' : 'Add user'}
+                </AddButton>
+                {message && <Message $error={message.startsWith('Error')}>{message}</Message>}
+                {showForm && (
+                    <FormWrapper>
+                        <Input
+                            type="text"
+                            placeholder="First name"
+                            value={newUser.firstName}
+                            onChange={(e) => setNewUser({ ...newUser, firstName: e.target.value })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Last name"
+                            value={newUser.lastName}
+                            onChange={(e) => setNewUser({ ...newUser, lastName: e.target.value })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Person ID"
+                            value={newUser.personId}
+                            onChange={(e) => setNewUser({ ...newUser, personId: e.target.value })}
+                        />
+                        <SubmitButton onClick={handleSubmit}>
+                            {isEditing ? 'Aktualizovat' : 'Uložit'}
+                        </SubmitButton>
+                    </FormWrapper>
+                )}
+                <UserList>
+                    {users.map((user) => (
+                        <UserItem key={user.id}>
+                            <UserInfo>{user.firstName} {user.lastName} ({user.personId})</UserInfo>
+                            <EditButton onClick={() => handleEdit(user)}>Edit</EditButton>
+                            <Button onClick={() => handleDelete(user.id)}>Delete</Button>
+                        </UserItem>
+                    ))}
+                </UserList>
+            </Container>
+        </PageWrapper>
+    );
+};
+
+export default HomePage;
+
 
 const PageWrapper = styled.div`
 	display: flex;
@@ -72,6 +213,13 @@ const Button = styled.button`
 	}
 `;
 
+const EditButton = styled(Button)`
+    background-color: #009534;
+    &:hover {
+        background-color: #00792a;
+    }
+`;
+
 const UserInfo = styled.span`
 	color: black;
 `;
@@ -97,131 +245,6 @@ const SubmitButton = styled(Button)`
 `;
 
 const Message = styled.p`
-	color: ${({ error }) => (error ? '#e74c3c' : '#2ecc71')};
-	margin: 10px 0;
+    color: ${({ $error }) => ($error ? '#e74c3c' : '#2ecc71')};
+    margin: 10px 0;
 `;
-
-const HomePage = () => {
-	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [showForm, setShowForm] = useState(false);
-	const [newUser, setNewUser] = useState({ firstName: '', lastName: '', personId: '' });
-	const [message, setMessage] = useState('');
-
-	useEffect(() => {
-		fetchUsers()
-			.then((data) => {
-				setUsers(data);
-				setLoading(false);
-			})
-			.catch(() => {
-				setError('Error fetching users');
-				setLoading(false);
-			});
-	}, []);
-
-	const handleDelete = (id) => {
-		deleteUser(id)
-			.then(() => {
-				setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
-				setMessage('User deleted successfully');
-			})
-			.catch((error) => {
-				setError('Error deleting user');
-				console.log('Delete user error:', error);
-			});
-	};
-
-    const handleAddUser = () => {
-        createUser(newUser)
-            .then((response) => {
-                setUsers((prevUsers) => [...prevUsers, response]);
-                setMessage('User added successfully');
-                setNewUser({ firstName: '', lastName: '', personId: '' });
-                setShowForm(false);
-            })
-            .catch((error) => {
-                if (error.response) {
-                    const status = error.response.status;
-                    let errorMessage;
-                    switch (status) {
-                        case 400:
-                            errorMessage = 'Wrong input data';
-                            break;
-                        case 404:
-                            errorMessage = 'User not found';
-                            break;
-                        case 500:
-                            errorMessage = 'Internal server error';
-                            break;
-                        default:
-                            errorMessage = `Unknown error: ${status}`;
-                    }    
-                    setMessage(`Error ${status}: ${errorMessage}`);
-                } else if (error.message) {
-                    setMessage(`Error adding user: ${error.message}`);
-                } else {
-                    setMessage('Unknown error adding user');
-                }
-                console.log('Add user error:', error);
-            });
-    };
-    
-    
-
-	if (loading) {
-		return <p>Načítám...</p>;
-	}
-
-	if (error) {
-		return <p>{error}</p>;
-	}
-
-	return (
-		<PageWrapper>
-			<Container>
-				<Title>Genesis users</Title>
-				<AddButton onClick={() => setShowForm(!showForm)}>
-					{showForm ? 'Close form' : 'Add user'}
-				</AddButton>
-				{message && <Message error={message.startsWith('Error')}>{message}</Message>}
-				{showForm && (
-					<FormWrapper>
-						<Input
-							type="text"
-							placeholder="First name"
-							value={newUser.firstName}
-							onChange={(e) => setNewUser({ ...newUser, firstName: e.target.value })}
-						/>
-						<Input
-							type="text"
-							placeholder="Last name"
-							value={newUser.lastName}
-							onChange={(e) => setNewUser({ ...newUser, lastName: e.target.value })}
-						/>
-						<Input
-							type="text"
-							placeholder="Person ID"
-							value={newUser.personId}
-							onChange={(e) => setNewUser({ ...newUser, personId: e.target.value })}
-						/>
-						<SubmitButton onClick={handleAddUser}>Uložit</SubmitButton>
-					</FormWrapper>
-				)}
-				<UserList>
-					{users.map((user) => (
-						<UserItem key={user.id}>
-							<UserInfo>
-								{user.firstName} {user.lastName} ({user.personId})
-							</UserInfo>
-							<Button onClick={() => handleDelete(user.id)}>Delete</Button>
-						</UserItem>
-					))}
-				</UserList>
-			</Container>
-		</PageWrapper>
-	);
-};
-
-export default HomePage;
