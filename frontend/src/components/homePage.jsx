@@ -245,6 +245,6 @@ const SubmitButton = styled(Button)`
 `;
 
 const Message = styled.p`
-    color: ${({ $error }) => ($error ? '#e74c3c' : '#2ecc71')};
+    color: ${({ $error }) => ($error ? '#e74c3c' : '#00a043')};
     margin: 10px 0;
 `;
