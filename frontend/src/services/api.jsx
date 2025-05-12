@@ -1,11 +1,23 @@
 const API_BASE_URL = 'http://localhost:8080/api/v1';
 
-export async function fetchUsers() {
-  const response = await fetch(`${API_BASE_URL}/users?detail=true`);
-  const data = await response.json();
-  return data;
+async function handleResponse(response) {
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({
+      error: 'Neznámá chyba',
+      details: 'Server neposkytl detailní zprávu',
+    }));
+    if (errorData.error == errorData.details) {
+      throw new Error(`${errorData.error}`);
+    }
+    throw new Error(`${errorData.error}: ${errorData.details}`);
+  }
+  return response.json();
 }
 
+export async function fetchUsers() {
+  const response = await fetch(`${API_BASE_URL}/users?detail=true`);
+  return handleResponse(response);
+}
 
 export async function createUser(userData) {
   const response = await fetch(`${API_BASE_URL}/users`, {
@@ -13,7 +25,7 @@ export async function createUser(userData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
   });
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function updateUser(userId, userData) {
@@ -22,17 +34,17 @@ export async function updateUser(userId, userData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
   });
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function deleteUser(userId) {
   const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
     method: 'DELETE',
   });
-  return response.json();
+  return handleResponse(response);
 }
 
 export async function fetchUser(userId) {
   const response = await fetch(`${API_BASE_URL}/users/${userId}`);
-  return response.json();
+  return handleResponse(response);
 }
