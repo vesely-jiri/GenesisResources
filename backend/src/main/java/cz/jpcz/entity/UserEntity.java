@@ -1,9 +1,13 @@
 package cz.jpcz.entity;
 
-import cz.jpcz.util.UserVerify;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -26,36 +30,5 @@ public class UserEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personId = personId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getPersonId() {
-        return personId;
-    }
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-    public String getUuid() {
-        return uuid;
-    }
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 }
