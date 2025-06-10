@@ -56,7 +56,7 @@ cd /path/to/apps
 
 **2.) Clone repository**
 ```
-git clone https://github.com/vesely-jiri/GenesisResources
+git clone -b release/deploy https://github.com/vesely-jiri/GenesisResources
 ```
 
 **3.) Navigate to project directory**
