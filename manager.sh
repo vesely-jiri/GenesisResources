@@ -167,7 +167,7 @@ while [[ $# -gt 0 ]]; do
             ACTION="clean"
             shift
             ;;
-        -b|--b|build)
+        -b|--b|--build)
             BUILD=true
             shift
             ;;
