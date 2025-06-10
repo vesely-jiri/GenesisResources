@@ -1,4 +1,4 @@
-package cz.jpcz.exceptions;
+package cz.jpcz.genesisresources.exceptions;
 
 public class PersonNotFoundException extends RuntimeException{
     public PersonNotFoundException(String message) {

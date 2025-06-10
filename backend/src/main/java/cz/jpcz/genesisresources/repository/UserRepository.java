@@ -1,6 +1,6 @@
-package cz.jpcz.repository;
+package cz.jpcz.genesisresources.repository;
 
-import cz.jpcz.entity.UserEntity;
+import cz.jpcz.genesisresources.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

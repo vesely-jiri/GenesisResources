@@ -1,4 +1,4 @@
-package cz.jpcz.exceptions;
+package cz.jpcz.genesisresources.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;

@@ -1,4 +1,4 @@
-package cz.jpcz.exceptions;
+package cz.jpcz.genesisresources.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {

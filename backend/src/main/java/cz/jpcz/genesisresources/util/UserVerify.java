@@ -1,6 +1,6 @@
-package cz.jpcz.util;
+package cz.jpcz.genesisresources.util;
 
-import cz.jpcz.exceptions.PersonNotFoundException;
+import cz.jpcz.genesisresources.exceptions.PersonNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

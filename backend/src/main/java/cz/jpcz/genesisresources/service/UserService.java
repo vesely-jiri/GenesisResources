@@ -1,52 +1,47 @@
-package cz.jpcz.service;
+package cz.jpcz.genesisresources.service;
 
-import cz.jpcz.dto.UserDTO;
-import cz.jpcz.entity.UserEntity;
-import cz.jpcz.exceptions.PersonAlreadyExistsException;
-import cz.jpcz.exceptions.PersonNotFoundException;
-import cz.jpcz.exceptions.UserNotFoundException;
-import cz.jpcz.repository.UserRepository;
-import cz.jpcz.util.UserVerify;
+import cz.jpcz.genesisresources.dto.UserDTO;
+import cz.jpcz.genesisresources.dto.UserDetailDTO;
+import cz.jpcz.genesisresources.entity.UserEntity;
+import cz.jpcz.genesisresources.exceptions.PersonAlreadyExistsException;
+import cz.jpcz.genesisresources.exceptions.PersonNotFoundException;
+import cz.jpcz.genesisresources.exceptions.UserNotFoundException;
+import cz.jpcz.genesisresources.mapper.UserMapper;
+import cz.jpcz.genesisresources.repository.UserRepository;
+import cz.jpcz.genesisresources.util.UserVerify;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper mapper;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDTO getBasicDTOUser(Long id) {
+        return userRepository.findById(id)
+                .map(mapper::toDTO)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
-    public UserDTO getDTOUser(Long id) {
-        return getDTOUser(id, false);
-    }
-
-    public UserDTO getDTOUser(Long id, boolean detail) {
-        log.debug("Attempting to fetch user with id {}", id);
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> {
-                    log.warn("Unable to fetch: User with id {} not found", id);
-                    return new UserNotFoundException("User with id " + id + " not found");
-                });
-
-        log.info("Fetched user with id {}", id);
-        if (!detail) return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
-        return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName(),
-                userEntity.getPersonId(), userEntity.getUuid());
+    public UserDetailDTO getDetailDTOUser(Long id) {
+        return userRepository.findById(id)
+                .map(mapper::toDetailDTO)
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
     public List<UserDTO> getAllDTOUsers(boolean detail) {
-        return userRepository.findAll().stream().map(user -> getDTOUser(user.getId(), detail)).toList();
+        return userRepository.findAll().stream()
+                .map(user -> detail ? mapper.toDetailDTO(user) : mapper.toDTO(user))
+                .toList();
     }
 
-    public UserDTO createDTOUser(UserDTO userDTO) {
+    public UserDTO createDTOUser(UserDetailDTO userDTO) {
         log.debug("Attempting to create user with personId {}", userDTO.getPersonId());
         if (userRepository.existsByPersonId(userDTO.getPersonId())) {
             log.warn("User with personId {} already exists", userDTO.getPersonId());
@@ -54,19 +49,18 @@ public class UserService {
         }
         UserVerify.validatePerson(userDTO.getPersonId());
         UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId());
-        userRepository.save(userEntity);
-        log.info("Created user with ID {}", userEntity.getId());
-        return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
+        UserEntity savedEntity = userRepository.save(userEntity);
+        log.info("Created user with ID {}", savedEntity.getId());
+        return mapper.toDTO(savedEntity);
     }
 
-    public UserDTO updateDTOUser(Long id, UserDTO userDTO) {
+    public UserDTO updateDTOUser(Long id, UserDetailDTO userDTO) {
         log.debug("Attempting to update user with ID {}", id);
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("Unable to update! User with id {} not found", id);
                     return new UserNotFoundException("User with id " + id + " not found");
                         });
-        log.info("Updating user with ID {}", id);
         if (!userEntity.getPersonId().equals(userDTO.getPersonId())) {
             log.warn("Unable to update! PersonId {} does not match", userDTO.getPersonId() + " not found");
             throw new PersonNotFoundException(userDTO.getPersonId());
@@ -75,7 +69,7 @@ public class UserService {
         userEntity.setLastName(userDTO.getLastName());
         userRepository.save(userEntity);
         log.debug("Updated user with ID {}", id);
-        return new UserDTO(userEntity.getId(), userEntity.getFirstName(), userEntity.getLastName());
+        return mapper.toDTO(userEntity);
     }
 
     public void deleteDTOUser(Long id) {

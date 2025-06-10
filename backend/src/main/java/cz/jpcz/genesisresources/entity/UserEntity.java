@@ -1,4 +1,4 @@
-package cz.jpcz.entity;
+package cz.jpcz.genesisresources.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
