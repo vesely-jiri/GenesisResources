@@ -61,10 +61,6 @@ public class UserService {
                     log.warn("Unable to update! User with id {} not found", id);
                     return new UserNotFoundException("User with id " + id + " not found");
                         });
-        if (!userEntity.getPersonId().equals(userDTO.getPersonId())) {
-            log.warn("Unable to update! PersonId {} does not match", userDTO.getPersonId() + " not found");
-            throw new PersonNotFoundException(userDTO.getPersonId());
-        }
         userEntity.setFirstName(userDTO.getFirstName());
         userEntity.setLastName(userDTO.getLastName());
         userRepository.save(userEntity);
