@@ -5,6 +5,7 @@ services:
 
   frontend:
     build:
+      target: development
       args:
         NODE_ENV: development
     env_file:
@@ -12,3 +13,7 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+  gateway:
+    volumes:
+      - ./gateway/nginx.development.conf:/etc/nginx/nginx.conf:ro

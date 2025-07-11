@@ -7,26 +7,49 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "${DB_PORT}:5432"
+    networks:
+      - internal
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: backend/Dockerfile
     ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
+      - "8080:8080"
+    networks:
+      - internal
     depends_on:
       - db
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: frontend/Dockerfile
     ports:
-      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      - "3000:3000"
+    networks:
+      - internal
     depends_on:
       - backend
+
+  gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - internal
+    depends_on:
+      - backend
+      - frontend
+
+networks:
+  internal:
+    driver: bridge
 
 volumes:
   postgres-data:
