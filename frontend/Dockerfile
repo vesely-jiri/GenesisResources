@@ -20,6 +20,7 @@ WORKDIR /app
 
 COPY frontend/package*.json ./
 RUN npm install
+COPY gateway/nginx.development.conf /etc/nginx/conf.d/default.conf
 
 COPY ./frontend .
 
