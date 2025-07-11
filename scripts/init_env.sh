@@ -29,15 +29,20 @@ create_env_file() {
         fi
     fi
 
-    cat << EOF > "$env_file"
-DB_HOST: db
-DB_USER: PQUser
-DB_PASSWORD: $DB_PASSWORD
-DB_NAME: GRDB_$env
-DB_PORT: 5432
+    if [ "$env" == "development" ]; then
+        url="http://localhost/api/v1"
+    else
+        url="/api/v1"
+    fi
 
-BACKEND_PORT=8080
-FRONTEND_PORT=3000
+    cat << EOF > "$env_file"
+DB_HOST=db
+DB_USER=PQUser
+DB_PASSWORD=$DB_PASSWORD
+DB_NAME=GRDB_$env
+DB_PORT=5432
+
+VITE_API_BASE_URL=$url
 
 SPRING_PROFILE=$env
 EOF
