@@ -99,6 +99,9 @@ start_env() {
     local COMPOSE_FILE="${SCRIPT_DIR}/docker-compose-${ENV}.yml"
     local CMD="docker compose -f ./docker-compose-base.yml -f \"${COMPOSE_FILE}\" --env-file .env.${ENV} up -d"
     log "${GREEN}🚀 Starting environment: ${ENV}${RESET}"
+
+    chmod +x ./scripts/init_env.sh
+
     if ! [ -x "${SCRIPT_DIR}/scripts/init_env.sh" ]; then
         log "${RED}❌ Initialization script not found or not executable. Exiting...${RESET}"
         exit 1
