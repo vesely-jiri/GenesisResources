@@ -49,6 +49,8 @@ The following technologies are used in this project:
 | **Docker**                  | For running services in containers           |
 | **Bash**                    | For executing init and start scripts through GenesisResources CLI |
 
+### Installation
+
 **1.) Open terminal supporting bash and locate to desired project directory where GenesisResources will be cloned**
 ```
 cd /path/to/apps
@@ -92,6 +94,19 @@ http://localhost:80
 #Frontend development default route
 http://localhost:3000
 ```
+
+### Troubleshooting
+
+#### Using WSL2(Ubuntu distribution)
+
+- Make sure that you are using WSL2 (`wsl --list --verbose`)
+- Cloning the project to `/mnt/c/...` is not recommended due to performance issues, always clone to `cd ~`
+- Update your packages `sudo apt update`
+- Make sure to have docker installed on your WSL2 distribution `sudo apt install docker.io docker-compose-v2`
+- Make sure to `chmod +x manager.sh`, as it is a bash script
+- Make sure to add your user to the docker group `sudo usermod -aG docker $USER` and log out and log in again
+- Building NPM packages might take a while, be patient
+- Default WSL Ram is 1GB, it's good practice to have at least 2GB of RAM
 
 ## Usage
 
