@@ -26,7 +26,6 @@
 **/build/
 **/.cache/
 **/yarn.lock
-**/package-lock.json
 **/npm-debug.log*
 **/.nuxt/
 **/.next/
