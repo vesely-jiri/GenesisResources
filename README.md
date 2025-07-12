@@ -37,7 +37,7 @@ The following technologies are used in this project:
 | **React (Vite)**               | Frontend development framework and build tool |
 
 
-## Installation
+## Installation of deployment version
 
 ### Requirements:
 
@@ -61,10 +61,15 @@ git clone -b release/deploy https://github.com/vesely-jiri/GenesisResources
 
 **3.) Navigate to project directory**
 ```
-cd GenesisResources
+cd GenesisResources/
 ```
 
-**4.) Run start script with build flag**
+**4.) Make manager script executable**
+````
+chmod +x manager.sh
+````
+
+**5.) Run start script with build flag**
 ```
 ./manager.sh development start --b
 ```
@@ -72,16 +77,19 @@ cd GenesisResources
 ./manager.sh production start --b
 ```
 
-**5.) Choose database password for chosen profile or let script generate one using (openssl base64 12)**
+**6.) Choose database password for chosen profile or let script generate one using (openssl base64 12)**
 ```
 Enter new database password for .env.<profile> (generate):
 ```
 
-**6.) App is ready to be used**
+**7.) App is ready to be used**
 ```
-#Backend default port
-http://localhost:8080
-#Frontend default port
+#Backend default route
+http://localhost:8080/api/v1/
+
+#Frontend production default route
+http://localhost:80
+#Frontend development default route
 http://localhost:3000
 ```
 
