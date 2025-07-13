@@ -7,6 +7,7 @@ import cz.jpcz.genesisresources.exceptions.PersonAlreadyExistsException;
 import cz.jpcz.genesisresources.exceptions.UserNotFoundException;
 import cz.jpcz.genesisresources.mapper.UserMapper;
 import cz.jpcz.genesisresources.repository.UserRepository;
+import cz.jpcz.genesisresources.validator.PersonVerify;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     private UserRepository repository;
+    private PersonVerify personVerify;
     private UserService service;
     private UserMapper mapper;
 
@@ -28,7 +30,8 @@ public class UserServiceTest {
     void setUp() {
         repository = mock(UserRepository.class);
         mapper = mock(UserMapper.class);
-        service = new UserService(repository,mapper);
+        personVerify = mock(PersonVerify.class);
+        service = new UserService(repository,personVerify,mapper);
     }
 
     @Test
