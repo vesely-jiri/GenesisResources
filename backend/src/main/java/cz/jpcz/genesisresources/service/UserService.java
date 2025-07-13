@@ -4,11 +4,10 @@ import cz.jpcz.genesisresources.dto.UserDTO;
 import cz.jpcz.genesisresources.dto.UserDetailDTO;
 import cz.jpcz.genesisresources.entity.UserEntity;
 import cz.jpcz.genesisresources.exceptions.PersonAlreadyExistsException;
-import cz.jpcz.genesisresources.exceptions.PersonNotFoundException;
 import cz.jpcz.genesisresources.exceptions.UserNotFoundException;
 import cz.jpcz.genesisresources.mapper.UserMapper;
 import cz.jpcz.genesisresources.repository.UserRepository;
-import cz.jpcz.genesisresources.util.UserVerify;
+import cz.jpcz.genesisresources.validator.PersonVerify;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PersonVerify personVerify;
     private final UserMapper mapper;
 
     public UserDTO getBasicDTOUser(Long id) {
@@ -43,11 +43,11 @@ public class UserService {
 
     public UserDTO createDTOUser(UserDetailDTO userDTO) {
         log.debug("Attempting to create user with personId {}", userDTO.getPersonId());
+        personVerify.validatePerson(userDTO.getPersonId());
         if (userRepository.existsByPersonId(userDTO.getPersonId())) {
             log.warn("User with personId {} already exists", userDTO.getPersonId());
             throw new PersonAlreadyExistsException(userDTO.getPersonId());
         }
-        UserVerify.validatePerson(userDTO.getPersonId());
         UserEntity userEntity = new UserEntity(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getPersonId());
         UserEntity savedEntity = userRepository.save(userEntity);
         log.info("Created user with ID {}", savedEntity.getId());
