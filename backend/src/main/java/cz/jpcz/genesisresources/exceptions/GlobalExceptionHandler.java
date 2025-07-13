@@ -45,6 +45,12 @@ public class GlobalExceptionHandler {
         return buildErrorResponse("Data integrity violation", ex.getMessage(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(PersonFileReadException.class)
+    public ResponseEntity<Map<String, String>> handleFileNotFound(PersonFileReadException ex) {
+        log.error("FileNotFoundException caught: {}", ex.getMessage());
+        return buildErrorResponse("Error reading file", ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneric(Exception ex) {
         log.error("Generic exception caught: {}", ex.getMessage());
